@@ -1,0 +1,216 @@
+:root {
+  --bg-dark: #0f172a;
+  --bg-light: #312e81;
+  --accent: #38bdf8;
+  --accent-2: #a78bfa;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --panel: rgba(255, 255, 255, 0.07);
+  --border: rgba(255, 255, 255, 0.14);
+  --ball-size: clamp(48px, 9vmin, 84px);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(12px, 3vw, 32px);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.18), transparent 45%),
+    radial-gradient(circle at 85% 85%, rgba(167, 139, 250, 0.2), transparent 45%),
+    linear-gradient(135deg, var(--bg-dark), var(--bg-light));
+}
+
+.game {
+  width: min(900px, 100%);
+  height: min(760px, 100%);
+  min-height: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 2.2vh, 22px);
+  padding: clamp(16px, 3vw, 28px);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  background: var(--panel);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.game__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+}
+
+.game__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.game__logo {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  box-shadow: 0 0 18px rgba(56, 189, 248, 0.7);
+}
+
+.game h1 {
+  margin: 0;
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  letter-spacing: -0.02em;
+}
+
+.game__hint {
+  margin: 0;
+  color: var(--muted);
+  font-size: clamp(0.8rem, 2.4vw, 0.95rem);
+}
+
+.scoreboard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 18px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.scoreboard__score {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.scoreboard__label {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.scoreboard__value {
+  min-width: 2ch;
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+  text-align: center;
+}
+
+.restart {
+  appearance: none;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 10px 20px;
+  font: inherit;
+  font-weight: 600;
+  color: #0b1220;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+
+.restart:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(56, 189, 248, 0.3);
+  filter: brightness(1.05);
+}
+
+.restart:active {
+  transform: translateY(0);
+}
+
+.arena {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 240px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px) 0 0 / 32px 32px,
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px) 0 0 / 32px 32px,
+    rgba(2, 6, 23, 0.45);
+  touch-action: manipulation;
+}
+
+.ball {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--ball-size);
+  height: var(--ball-size);
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 30%, #ffffff 0%, var(--accent) 35%, #2563eb 100%);
+  box-shadow:
+    0 0 0 6px rgba(56, 189, 248, 0.12),
+    0 0 28px rgba(56, 189, 248, 0.65),
+    inset -6px -8px 14px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  will-change: transform;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.ball:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 4px;
+}
+
+.ball--hit {
+  animation: pop 0.18s ease-out;
+}
+
+@keyframes pop {
+  50% {
+    box-shadow:
+      0 0 0 14px rgba(56, 189, 248, 0.22),
+      0 0 40px rgba(56, 189, 248, 0.9),
+      inset -6px -8px 14px rgba(0, 0, 0, 0.25);
+  }
+}
+
+.game__footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 520px) {
+  .game__header,
+  .scoreboard {
+    text-align: center;
+  }
+
+  .scoreboard {
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .restart,
+  .ball--hit {
+    transition: none;
+    animation: none;
+  }
+}
